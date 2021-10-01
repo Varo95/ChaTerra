@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="88.59999084472656" text="Día/Hora" />
+          <TableColumn prefWidth="178.60000610351562" text="Usuario" />
+            <TableColumn prefWidth="75.0" text="Mensaje" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </center>
+   <right>
+      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Usuarios Online" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+   </right>
+   <bottom>
+      <GridPane alignment="CENTER" BorderPane.alignment="BOTTOM_CENTER">
+        <columnConstraints>
+          <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="488.0" minWidth="10.0" prefWidth="477.0" />
+          <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" maxWidth="294.0" minWidth="10.0" prefWidth="123.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextArea GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" text="📤" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" top="15.0" />
+         </padding>
+      </GridPane>
+   </bottom>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Cambiar nickname" />
+              <MenuItem mnemonicParsing="false" text="Salir de la sala" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+</BorderPane>

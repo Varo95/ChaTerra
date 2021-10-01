@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RoomList>
+    <Room Name="Salita">
+        <Online_Users>
+            <User>Alvaro</User>
+            <User>Gonzalo</User>
+        </Online_Users>
+        <Messages>
+            <Message Time="2021-10-02 00:30:38:65" User="Alvaro">Hola mundo</Message>
+            <Message Time="2021-10-02 00:30:38:65" User="Gonzalo">Hola mundo2</Message>
+        </Messages>
+    </Room>
+</RoomList>
