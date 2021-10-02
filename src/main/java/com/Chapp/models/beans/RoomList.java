@@ -27,6 +27,14 @@ public class RoomList implements Serializable {
         return list;
     }
 
+    public boolean addRoom(Room r) {
+        return this.list.add(r);
+    }
+
+    public boolean removeRoom(Room r){
+        return this.list.remove(r);
+    }
+
     public void setList(Set<Room> list) {
         this.list = list;
     }

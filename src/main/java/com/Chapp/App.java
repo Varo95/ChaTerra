@@ -15,9 +15,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        stage.setScene(new Scene(loadFXML("primary")));
-        //stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
-        stage.setTitle(" Chattera");
+        stage.setScene(new Scene(loadFXML("login")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
+        stage.setTitle(" Iniciar sesión");
         stage.show();
     }
 
@@ -26,12 +26,13 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void loadScene(Stage stage, String fxml, String title) throws IOException {
+    public static void loadScene(Stage stage, String fxml, String title, boolean SaW) throws IOException {
         stage.setScene(new Scene(loadFXML(fxml)));
-        //stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
+        stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle(title);
-        stage.showAndWait();
+        if(SaW) stage.showAndWait();
+        else stage.show();
     }
 
     public static void changeTitle(Stage stage, String title){

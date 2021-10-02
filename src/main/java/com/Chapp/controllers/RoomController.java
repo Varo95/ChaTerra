@@ -7,7 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 
-public class Secondary {
+public class RoomController {
     @FXML
     private TableView<Message> tvmessages;
     @FXML

@@ -2,23 +2,29 @@ package com.Chapp.utils;
 
 import com.Chapp.models.beans.Room;
 import com.Chapp.models.dao.RoomListDAO;
-import jakarta.xml.bind.JAXBException;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateTimeStringConverter;
 
-import java.io.File;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-public class LDTSC {
+public class Utils {
     private static LocalDateTimeStringConverter a = null;
     private static DateTimeFormatter b = null;
 
+    /**
+     * Estos métodos son singleton para formatear el texto de la fecha, estamparlo en el XML y recuperarlo bien
+     */
     public static LocalDateTimeStringConverter ldtsc(DateTimeFormatter dts) {
         if (a == null)
             a = new LocalDateTimeStringConverter(dts, dts);
         return a;
     }
-    public static DateTimeFormatter dtf(String s){
+
+    public static DateTimeFormatter dtf(String s) {
         if (b == null)
             b = DateTimeFormatter.ofPattern(s);
         return b;
@@ -26,9 +32,10 @@ public class LDTSC {
 
     /**
      * Este método sirve para que muestre correctamente el texto el combobox
+     *
      * @return StringConverter de Rooms
      */
-    public static StringConverter<Room> RoomConverter(){
+    public static StringConverter<Room> RoomConverter() {
         return new StringConverter<>() {
             @Override
             public String toString(Room object) {
@@ -37,19 +44,26 @@ public class LDTSC {
 
             @Override
             public Room fromString(String string) {
-                Room result= null;
-                try {
-                    for(Room r: RoomListDAO.loadFile(new File("Chaterra.xml")).getList()){
-                        if(r.equals(new Room(string))){
-                            result=r;
-                            break;
-                        }
+                Room result = null;
+                for (Room r : RoomListDAO.load().getList()) {
+                    if (r.equals(new Room(string))) {
+                        result = r;
+                        break;
                     }
-                } catch (JAXBException e) {
-                    e.printStackTrace();
                 }
                 return result;
             }
         };
+    }
+
+    /**
+     * Este método sirve para pasar de HasSet a ArrayList y que se pueda insertar en el combobox
+     */
+    public static List<Room> SetToList(Set<Room> rooms){
+        return new ArrayList<>(rooms);
+    }
+
+    public static Set<Room> ListToSet(List<Room> rooms){
+        return new HashSet<>(rooms);
     }
 }

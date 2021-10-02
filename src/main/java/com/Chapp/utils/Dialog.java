@@ -49,6 +49,6 @@ public class Dialog {
     }
 
     private static void addIcon(Stage stage) {
-        stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("vitalicon.png"))));
+        stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
     }
 }

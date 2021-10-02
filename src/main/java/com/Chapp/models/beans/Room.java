@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,10 +30,13 @@ public class Room implements Serializable {
 
     public Room(String name) {
         this.name = name;
+        this.userList = new HashSet<>();
+        this.messageList = new ArrayList<>();
         this.isTemporal = true;
     }
-    public Room(String name, User a){
-        this.name=name;
+    //Constructor para probar XML
+    public Room(String name, User a) {
+        this.name = name;
         this.userList = new HashSet<>();
         userList.add(a);
     }
@@ -63,7 +67,7 @@ public class Room implements Serializable {
         this.userList.add(user);
     }
 
-    public void removeUser(User user){
+    public void removeUser(User user) {
         this.userList.remove(user);
     }
 
@@ -83,8 +87,19 @@ public class Room implements Serializable {
         this.isTemporal = isTemporal;
     }
 
-    public String toCombox(){
-        return "Sala: "+this.name+". Online: "+this.userList.size();
+    public String toCombox() {
+        return "Sala: " + this.name + ". Online: " + this.userList.size();
+    }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 
     @Override
