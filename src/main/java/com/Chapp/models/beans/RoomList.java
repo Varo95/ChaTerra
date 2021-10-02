@@ -6,35 +6,29 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @XmlRootElement(name = "RoomList")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class RoomList implements Serializable {
     @XmlElement(name = "Room", type = Room.class)
-    private List<Room> list;
+    private Set<Room> list;
 
     public RoomList() {
-        this.list = new ArrayList<>();
+        this.list = new HashSet<>();
     }
 
-    public RoomList(List<Room> list) {
+    public RoomList(Set<Room> list) {
         this.list = list;
     }
 
-    public List<Room> getList() {
+    public Set<Room> getList() {
         return list;
     }
 
-    public void setList(List<Room> list) {
+    public void setList(Set<Room> list) {
         this.list = list;
     }
 
-    @Override
-    public String toString() {
-        return "RoomList{" +
-                "list=" + list +
-                '}';
-    }
 }

@@ -22,18 +22,6 @@ public class Message implements Serializable {
     @XmlValue
     private String message;
 
-    //--------------Métodos para que el usuario, la fecha y la sala se queden como atributo en el mensaje---------------
-    /*@XmlAttribute(name = "Time")
-    private String setTimeXML() {
-        return timestamp.toString();
-    }
-
-    @XmlAttribute(name = "User")
-    private String setUserXML() {
-        return user.getName();
-    }*/
-
-    //------------------------------------------------------------------------------------------------------------------
     public Message() {
     }
 
@@ -76,13 +64,4 @@ public class Message implements Serializable {
         this.message = message;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "timestamp=" + timestamp +
-                ", user=" + user +
-                ", room=" + room +
-                ", message='" + message + '\'' +
-                '}';
-    }
 }

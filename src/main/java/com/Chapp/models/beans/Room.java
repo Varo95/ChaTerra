@@ -27,11 +27,14 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(String name, User user) {
+    public Room(String name) {
         this.name = name;
-        this.userList = new HashSet<>();
-        this.userList.add(user);
         this.isTemporal = true;
+    }
+    public Room(String name, User a){
+        this.name=name;
+        this.userList = new HashSet<>();
+        userList.add(a);
     }
 
     public Room(String name, Set<User> users, List<Message> messageList) {
@@ -56,8 +59,12 @@ public class Room implements Serializable {
         this.userList = userList;
     }
 
-    public void addUser(User user) {
+    public void addUserOnline(User user) {
         this.userList.add(user);
+    }
+
+    public void removeUser(User user){
+        this.userList.remove(user);
     }
 
     public List<Message> getMessageList() {
@@ -76,14 +83,8 @@ public class Room implements Serializable {
         this.isTemporal = isTemporal;
     }
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "name='" + name + '\'' +
-                ", userList=" + userList +
-                ", messageList=" + messageList +
-                ", isTemporal=" + isTemporal +
-                '}';
+    public String toCombox(){
+        return "Sala: "+this.name+". Online: "+this.userList.size();
     }
 
     @Override

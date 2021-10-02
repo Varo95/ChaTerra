@@ -10,16 +10,18 @@ import javafx.util.converter.LocalDateTimeStringConverter;
 import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Start {
     public static void main(String[] args){
-        //App.main(args);
+        App.main(args);
         //--------------------------------------Prueba de escritura-----------------------------------------------------
         /*User a = new User("Alvaro");
         User m = new User("Gonzalo");
         Room c = new Room("Salita",a);
-        c.addUser(m);
+        c.addUserOnline(m);
 
         Message b = new Message(LocalDateTime.now(),a,c,"Hola mundo");
         Message k = new Message(LocalDateTime.now(),m,c,"Hola mundo2");
@@ -27,7 +29,7 @@ public class Start {
         d.add(b);
         d.add(k);
         c.setMessageList(d);
-        List<Room> x = new ArrayList<>();
+        Set<Room> x = new HashSet<>();
         x.add(c);
         RoomList z = new RoomList(x);
         try{

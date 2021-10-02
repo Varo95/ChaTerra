@@ -25,7 +25,7 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextField GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <TextField fx:id="tfnickname" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Label text="Introduce un nickname" GridPane.halignment="CENTER" />
                   <Button mnemonicParsing="false" text="Entrar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
@@ -42,7 +42,7 @@
                <children>
                   <Label text="Selecciona la sala" GridPane.halignment="CENTER" />
                   <Label text="Crear sala" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                  <ComboBox prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="cbrooms" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Button mnemonicParsing="false" text="+" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                </children>
             </GridPane>
