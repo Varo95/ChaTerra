@@ -2,8 +2,8 @@
 <RoomList>
     <Room Name="Salita">
         <Online_Users>
-            <User>Gonzalo</User>
             <User>Alvaro</User>
+            <User>Gonzalo</User>
         </Online_Users>
         <Messages>
             <Message Time="2021-10-02 15:58:08:79" User="Alvaro">Hola mundo</Message>

@@ -17,18 +17,15 @@ public class Message implements Serializable {
     @XmlAttribute(name="User")
     @XmlJavaTypeAdapter(type = User.class, value = UserBind.class)
     private User user;
-    @XmlTransient
-    private Room room;
     @XmlValue
     private String message;
 
     public Message() {
     }
 
-    public Message(LocalDateTime timestamp, User user, Room room, String message) {
+    public Message(LocalDateTime timestamp, User user, String message) {
         this.timestamp = timestamp;
         this.user = user;
-        this.room = room;
         this.message = message;
     }
 
@@ -46,14 +43,6 @@ public class Message implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
     }
 
     public String getMessage() {

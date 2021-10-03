@@ -28,8 +28,6 @@ public class LoginController {
 
     private static RoomList roomList;
 
-    private Timer t;
-
     @FXML
     protected void initialize() {
         roomList = RoomListDAO.load();
@@ -39,20 +37,15 @@ public class LoginController {
             if (event.getCode() == KeyCode.ENTER)
                 joinRoom();
         });
-        t = new Timer();
+        Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> refreshComboBox());
             }
         }, 0, 30000);
-        /*Stage s = (Stage) tfnickname.getScene().getWindow();
-        s.setOnCloseRequest(windowEvent ->{
-            t.cancel();
-            t.purge();
-        });*/
         App.addTimer(t,"login");
-        RoomListDAO.RefreshDB(roomList, t);
+        RoomListDAO.RefreshDB(roomList);
     }
 
     @FXML
@@ -81,6 +74,7 @@ public class LoginController {
                 RoomController.setRoom(cbrooms.getSelectionModel().getSelectedItem(), c);
                 try {
                     App.loadScene(new Stage(), "room", "Sala: " + cbrooms.getSelectionModel().getSelectedItem().getName(), true, true);
+                    tfnickname.clear();
                 } catch (IOException e) {
                     Dialog.showError("Hubo un error", "Error al cargar la vista room", e.getMessage());
                 }

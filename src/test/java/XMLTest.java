@@ -26,8 +26,8 @@ public class XMLTest {
         Room c = new Room("Salita",a);
         c.addUserOnline(m);
 
-        Message b = new Message(LocalDateTime.now(),a,c,"Hola mundo");
-        Message k = new Message(LocalDateTime.now(),m,c,"Hola mundo2");
+        Message b = new Message(LocalDateTime.now(),a,"Hola mundo");
+        Message k = new Message(LocalDateTime.now(),m,"Hola mundo2");
         List<Message> d = new ArrayList<>();
         d.add(b);
         d.add(k);

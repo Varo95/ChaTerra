@@ -16,8 +16,10 @@ import java.util.TimerTask;
 
 public class RoomListDAO {
 
-    public static void RefreshDB(RoomList rl, Timer t){
-        t = (t==null)? new Timer(): t;
+    public static Timer t;
+
+    public static void RefreshDB(RoomList rl){
+        if(t==null) t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {

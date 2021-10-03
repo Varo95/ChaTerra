@@ -25,6 +25,7 @@ public class C_User {
                 onClickChange();
         });
     }
+
     public static void verifyChangeNick(Set<User> u, User user){
         users = u;
         old_nick = user;

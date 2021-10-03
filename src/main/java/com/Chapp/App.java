@@ -30,16 +30,9 @@ public class App extends Application {
         stage.setScene(new Scene(loadFXML(fxml)));
         stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
         stage.setTitle(title);
-        stage.setOnCloseRequest(windowEvent -> {
-            if (timers != null)
-                for (String s : timers.keySet()) {
-                    if(fxml.equals(s)) {
-                        Timer t = timers.get(s);
-                        t.cancel();
-                        t.purge();
-                    }
-                }
-        });
+        stage.setOnCloseRequest(windowEvent -> cancelAndPurgeTimers(fxml));
+        stage.setOnHiding(windowEvent -> cancelAndPurgeTimers(fxml));
+        stage.setOnHidden(windowEvent -> cancelAndPurgeTimers(fxml));
         stage.setResizable(notResizable);
         if (SaW) stage.showAndWait();
         else stage.show();
@@ -52,6 +45,17 @@ public class App extends Application {
     public static void addTimer(Timer t, String fxml) {
         if (timers == null) timers = new HashMap<>();
         timers.put(fxml, t);
+    }
+
+    public static void cancelAndPurgeTimers(String fxml) {
+        if (timers != null)
+            for (String s : timers.keySet()) {
+                if (fxml.equals(s)) {
+                    Timer t = timers.get(s);
+                    t.cancel();
+                    t.purge();
+                }
+            }
     }
 
     public static void main(String[] args) {

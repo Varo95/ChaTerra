@@ -44,15 +44,13 @@ public class RoomController {
     private static User user;
     private static RoomList roomList;
 
-    private Timer t;
-
     @FXML
     protected void initialize() {
         configureTables();
         refreshMessages();
         refreshOnlineUsers();
         //----Refrescar los mensajes y usuarios online---
-        t = new Timer();
+        Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -63,7 +61,6 @@ public class RoomController {
             }
         }, 0, 10000);
         App.addTimer(t,"room");
-        RoomListDAO.RefreshDB(roomList, t);
         //----------------------------
         //Enter para enviar
         tamessage.setOnKeyPressed(event -> {
@@ -105,9 +102,10 @@ public class RoomController {
     @FXML
     private void onclickSend() {
         if (!tamessage.getText().equals("") && !tamessage.getText().isEmpty()) {
-            Message m = new Message(LocalDateTime.now(), user, room, tamessage.getText());
+            Message m = new Message(LocalDateTime.now(), user, tamessage.getText());
             room.addMessage(m);
             refreshMessages();
+            RoomListDAO.RefreshDB(roomList);
             tamessage.clear();
         }
     }
