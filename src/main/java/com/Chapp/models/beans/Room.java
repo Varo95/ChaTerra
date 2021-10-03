@@ -67,8 +67,12 @@ public class Room implements Serializable {
         this.userList.add(user);
     }
 
-    public void removeUser(User user) {
+    public void removeUserOnline(User user) {
         this.userList.remove(user);
+    }
+
+    public void addMessage(Message message){
+        this.messageList.add(message);
     }
 
     public List<Message> getMessageList() {

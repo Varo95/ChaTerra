@@ -1,15 +1,34 @@
 package com.Chapp.models.dao;
 
+import com.Chapp.controllers.LoginController;
+import com.Chapp.controllers.RoomController;
 import com.Chapp.models.beans.RoomList;
 import com.Chapp.utils.Dialog;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.Unmarshaller;
+import javafx.application.Platform;
 
 import java.io.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RoomListDAO {
+
+    public static void RefreshDB(RoomList rl, Timer t){
+        t = (t==null)? new Timer(): t;
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() ->{
+                    saveFile(rl);
+                    LoginController.updateRooms(RoomListDAO.load());
+                    RoomController.updateRoom(RoomListDAO.load());
+                });
+            }
+        }, 0, 30000);
+    }
 
     public static void saveFile(RoomList rl) {
         saveFile(rl, "Chaterra.xml");

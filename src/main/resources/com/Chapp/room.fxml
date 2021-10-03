@@ -6,9 +6,9 @@
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Chapp.controllers.RoomController">
    <center>
-      <TableView fx:id="tvmessages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER_LEFT">
+      <TableView fx:id="tvmessages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
         <columns>
-          <TableColumn fx:id="tcdates" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Día/Hora" />
+          <TableColumn fx:id="tcdates" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" text="Hora" />
           <TableColumn fx:id="tcusers" maxWidth="72.0" minWidth="72.0" prefWidth="72.0" text="Usuario" />
             <TableColumn fx:id="tcmessages" maxWidth="1.7976931348623157E308" minWidth="228.0" prefWidth="228.0" sortable="false" text="Mensaje" />
         </columns>
@@ -41,7 +41,7 @@
                <GridPane.margin>
                   <Insets bottom="10.0" left="5.0" right="5.0" top="15.0" />
                </GridPane.margin></TextArea>
-            <Button mnemonicParsing="false" text="📤" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <Button mnemonicParsing="false" onAction="#onclickSend" text="📤" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets left="25.0" right="25.0" />
                </GridPane.margin></Button>
@@ -51,10 +51,12 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="Archivo">
             <items>
+                  <CheckMenuItem fx:id="darkmode" mnemonicParsing="false" text="Modo Oscuro" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
               <MenuItem mnemonicParsing="false" text="Cambiar nickname" />
-              <MenuItem mnemonicParsing="false" text="Salir de la sala" />
+              <MenuItem mnemonicParsing="false" onAction="#exitRoom" text="Salir de la sala" />
             </items>
           </Menu>
         </menus>
