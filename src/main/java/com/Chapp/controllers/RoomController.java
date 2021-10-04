@@ -55,12 +55,13 @@ public class RoomController {
             @Override
             public void run() {
                 Platform.runLater(() -> {
+                    App.updateRoomList(roomList.getList());
                     refreshMessages();
                     refreshOnlineUsers();
                 });
             }
-        }, 0, 10000);
-        App.addTimer(t,"room");
+        }, 0, 30000);
+        //App.addTimer(t,"room");
         //----------------------------
         //Enter para enviar
         tamessage.setOnKeyPressed(event -> {
@@ -89,15 +90,10 @@ public class RoomController {
         user = u;
     }
 
-    public static void updateRoom(RoomList rl) {
+    public static void initRoomList(RoomList rl){
         roomList = rl;
-        for (Room r : roomList.getList()) {
-            if (r.equals(room)) {
-                room = r;
-                break;
-            }
-        }
     }
+
 
     @FXML
     private void onclickSend() {
@@ -105,7 +101,7 @@ public class RoomController {
             Message m = new Message(LocalDateTime.now(), user, tamessage.getText());
             room.addMessage(m);
             refreshMessages();
-            RoomListDAO.RefreshDB(roomList);
+            App.updateRoomList(roomList.getList());
             tamessage.clear();
         }
     }

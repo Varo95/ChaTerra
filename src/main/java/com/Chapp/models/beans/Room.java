@@ -63,8 +63,8 @@ public class Room implements Serializable {
         this.userList = userList;
     }
 
-    public void addUserOnline(User user) {
-        this.userList.add(user);
+    public boolean addUserOnline(User user) {
+        return this.userList.add(user);
     }
 
     public void removeUserOnline(User user) {

@@ -16,7 +16,6 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,16 +40,23 @@ public class LoginController {
         t.schedule(new TimerTask() {
             @Override
             public void run() {
-                Platform.runLater(() -> refreshComboBox());
+                Platform.runLater(() -> {
+                    App.updateRoomList(roomList.getList());
+                    C_Room.existing_Rooms(roomList);
+                    refreshComboBox();
+                });
             }
         }, 0, 30000);
-        App.addTimer(t,"login");
-        RoomListDAO.RefreshDB(roomList);
+        //App.addTimer(t, "login");
+        LoginController.sendRoomList(roomList);
+    }
+
+    private static void sendRoomList(RoomList rl) {
+        roomList = rl;
     }
 
     @FXML
     private void addRoom() {
-        C_Room.existing_Rooms(roomList);
         try {
             App.loadScene(new Stage(), "c_room", "Creador de sala", true, false);
             refreshComboBox();
@@ -67,11 +73,11 @@ public class LoginController {
     @FXML
     private void joinRoom() {
         if (!tfnickname.getText().equals("") && !tfnickname.getText().isEmpty()) {
-            Set<User> r = cbrooms.getSelectionModel().getSelectedItem().getUserList();
             User c = new User(tfnickname.getText());
-            if (r.add(c)) {
+            if (cbrooms.getSelectionModel().getSelectedItem().addUserOnline(c)) {
                 Dialog.showInformation("", "", "Pulsa aceptar para unirte a la sala");
                 RoomController.setRoom(cbrooms.getSelectionModel().getSelectedItem(), c);
+                RoomController.initRoomList(roomList);
                 try {
                     App.loadScene(new Stage(), "room", "Sala: " + cbrooms.getSelectionModel().getSelectedItem().getName(), true, true);
                     tfnickname.clear();
@@ -86,8 +92,5 @@ public class LoginController {
         }
     }
 
-    public static void updateRooms(RoomList roomList) {
-        LoginController.roomList = roomList;
-    }
 
 }

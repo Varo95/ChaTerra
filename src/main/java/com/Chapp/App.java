@@ -1,6 +1,10 @@
 package com.Chapp;
 
+import com.Chapp.models.beans.Room;
+import com.Chapp.models.beans.RoomList;
+import com.Chapp.models.dao.RoomListDAO;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -8,16 +12,18 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Timer;
+import java.util.*;
 
 public class App extends Application {
 
     private static HashMap<String, Timer> timers;
+    private static RoomList roomList;
 
     @Override
     public void start(Stage stage) throws IOException {
+        RefreshDB();
+        //addTimer(new Timer(),"DB");
+        //stage.setOnCloseRequest(windowEvent -> cancelAndPurgeTimers("DB"));
         loadScene(stage, "login", " Iniciar Sesión", false, false);
     }
 
@@ -30,9 +36,9 @@ public class App extends Application {
         stage.setScene(new Scene(loadFXML(fxml)));
         stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
         stage.setTitle(title);
-        stage.setOnCloseRequest(windowEvent -> cancelAndPurgeTimers(fxml));
-        stage.setOnHiding(windowEvent -> cancelAndPurgeTimers(fxml));
-        stage.setOnHidden(windowEvent -> cancelAndPurgeTimers(fxml));
+        //stage.setOnCloseRequest(windowEvent -> cancelAndPurgeTimers(fxml));
+        //stage.setOnHiding(windowEvent -> cancelAndPurgeTimers(fxml));
+        //stage.setOnHidden(windowEvent -> cancelAndPurgeTimers(fxml));
         stage.setResizable(notResizable);
         if (SaW) stage.showAndWait();
         else stage.show();
@@ -56,9 +62,30 @@ public class App extends Application {
                     t.purge();
                 }
             }
+        if (timers != null && fxml.equals("DB")) {
+            Timer t = timers.get(fxml);
+            t.cancel();
+            t.purge();
+        }
+    }
+
+    public static void RefreshDB() {
+        roomList = RoomListDAO.load();
+        Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (roomList != null)
+                    Platform.runLater(() -> RoomListDAO.saveFile(roomList));
+            }
+        }, 0, 10000);
     }
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public static void updateRoomList(Set<Room> rl) {
+        roomList = new RoomList(rl);
     }
 }
