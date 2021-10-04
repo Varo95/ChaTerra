@@ -1,4 +1,4 @@
-package com.Chapp.models.dao;
+package com.Chapp.models.beans;
 
 import com.Chapp.utils.Utils;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;

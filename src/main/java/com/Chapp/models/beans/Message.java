@@ -1,7 +1,5 @@
 package com.Chapp.models.beans;
 
-import com.Chapp.models.dao.LocalDateTimeBind;
-import com.Chapp.models.dao.UserBind;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 

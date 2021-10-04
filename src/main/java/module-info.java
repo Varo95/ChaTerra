@@ -7,7 +7,6 @@ module Chaterra {
     requires javafx.graphics;
 
     opens com.Chapp.controllers to javafx.fxml, javafx.controls, javafx.graphics;
-    opens com.Chapp.models.beans to jakarta.xml.bind, com.sun.xml.bind;
-    opens com.Chapp.models.dao to jakarta.xml.bind, com.sun.xml.bind, com.sun.xml.bind.core;
+    opens com.Chapp.models.beans to jakarta.xml.bind, com.sun.xml.bind, com.sun.xml.bind.core;
     exports com.Chapp;
 }
