@@ -44,15 +44,17 @@ public class LoginController {
                     App.updateRoomList(roomList.getList());
                     C_Room.existing_Rooms(roomList);
                     refreshComboBox();
+                    for(Room r: roomList.getList()){
+                        if(r.isTemporal()) roomList.removeRoom(r);
+                        for(int i=0;i<r.getUserList().size();i++){
+                            if(!Utils.SetToListU(r.getUserList()).get(i).isOnline())
+                                r.removeUserOnline(Utils.SetToListU(r.getUserList()).get(i));
+                        }
+                    }
                 });
             }
         }, 0, 30000);
-        //App.addTimer(t, "login");
-        LoginController.sendRoomList(roomList);
-    }
-
-    private static void sendRoomList(RoomList rl) {
-        roomList = rl;
+        App.addTimer(t, "login");
     }
 
     @FXML
@@ -74,6 +76,7 @@ public class LoginController {
     private void joinRoom() {
         if (!tfnickname.getText().equals("") && !tfnickname.getText().isEmpty()) {
             User c = new User(tfnickname.getText());
+            c.setOnline(true);
             if (cbrooms.getSelectionModel().getSelectedItem().addUserOnline(c)) {
                 Dialog.showInformation("", "", "Pulsa aceptar para unirte a la sala");
                 RoomController.setRoom(cbrooms.getSelectionModel().getSelectedItem(), c);

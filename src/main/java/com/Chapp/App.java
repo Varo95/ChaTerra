@@ -18,12 +18,14 @@ public class App extends Application {
 
     private static HashMap<String, Timer> timers;
     private static RoomList roomList;
+    private static Timer t;
 
     @Override
     public void start(Stage stage) throws IOException {
+        if (t == null)
+            t = new Timer();
         RefreshDB();
-        //addTimer(new Timer(),"DB");
-        //stage.setOnCloseRequest(windowEvent -> cancelAndPurgeTimers("DB"));
+        addTimer(t, "DB");
         loadScene(stage, "login", " Iniciar Sesión", false, false);
     }
 
@@ -36,7 +38,7 @@ public class App extends Application {
         stage.setScene(new Scene(loadFXML(fxml)));
         stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
         stage.setTitle(title);
-        //stage.setOnCloseRequest(windowEvent -> cancelAndPurgeTimers(fxml));
+        stage.setOnCloseRequest(windowEvent -> cancelAndPurgeTimers(fxml));
         //stage.setOnHiding(windowEvent -> cancelAndPurgeTimers(fxml));
         //stage.setOnHidden(windowEvent -> cancelAndPurgeTimers(fxml));
         stage.setResizable(notResizable);
@@ -63,7 +65,6 @@ public class App extends Application {
                 }
             }
         if (timers != null && fxml.equals("DB")) {
-            Timer t = timers.get(fxml);
             t.cancel();
             t.purge();
         }
@@ -71,7 +72,6 @@ public class App extends Application {
 
     public static void RefreshDB() {
         roomList = RoomListDAO.load();
-        Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -83,9 +83,10 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        System.exit(0);
     }
 
     public static void updateRoomList(Set<Room> rl) {
-        roomList = new RoomList(rl);
+        roomList.setList(rl);
     }
 }

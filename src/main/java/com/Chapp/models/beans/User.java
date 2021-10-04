@@ -1,9 +1,6 @@
 package com.Chapp.models.beans;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlValue;
+import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;
 @XmlRootElement(name = "User")
@@ -12,6 +9,16 @@ public class User implements Serializable {
     @XmlValue
     private String name;
 
+    public boolean isOnline() {
+        return isOnline;
+    }
+
+    public void setOnline(boolean online) {
+        isOnline = online;
+    }
+
+    @XmlTransient
+    private boolean isOnline;
     private User(){}
 
     public User(String name) {

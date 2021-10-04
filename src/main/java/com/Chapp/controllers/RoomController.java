@@ -61,7 +61,7 @@ public class RoomController {
                 });
             }
         }, 0, 30000);
-        //App.addTimer(t,"room");
+        App.addTimer(t,"room");
         //----------------------------
         //Enter para enviar
         tamessage.setOnKeyPressed(event -> {
@@ -118,6 +118,7 @@ public class RoomController {
     private void exitRoom() {
         room.removeUserOnline(user);
         Dialog.showInformation("Desconexión", "Te desconectaste de la sala: " + room.getName(), "");
+        user.setOnline(false);
         App.closeScene((Stage) tamessage.getScene().getWindow());
     }
 
