@@ -25,10 +25,13 @@ public class LoginController {
     @FXML
     private TextField tfnickname;
 
+    private static Room selected;
+
     private static RoomList roomList;
 
     @FXML
     protected void initialize() {
+        App.RefreshDB();
         roomList = RoomListDAO.load();
         cbrooms.setConverter(Utils.RoomConverter());
         cbrooms.setItems(FXCollections.observableList(Utils.SetToListR(roomList.getList())));
@@ -36,13 +39,14 @@ public class LoginController {
             if (event.getCode() == KeyCode.ENTER)
                 joinRoom();
         });
+        //---------------------Actualizar salas y eliminar usuarios que no estén online-------------------
         Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> {
                     App.updateRoomList(roomList.getList());
-                    C_Room.existing_Rooms(roomList);
+                    Common_Window.existing_Rooms(roomList);
                     refreshComboBox();
                     for(Room r: roomList.getList()){
                         if(r.isTemporal()) roomList.removeRoom(r);
@@ -54,14 +58,16 @@ public class LoginController {
                 });
             }
         }, 0, 30000);
-        App.addTimer(t, "login");
+        //-------------------------------------------------------------------------------------------------
     }
 
     @FXML
     private void addRoom() {
         try {
-            App.loadScene(new Stage(), "c_room", "Creador de sala", true, false);
+            Common_Window.changeWindow(Common_Window.window.CREATE_ROOM);
+            App.loadScene(new Stage(), "common_window", "Creador de sala", true, false);
             refreshComboBox();
+            cbrooms.getSelectionModel().select(selected);
         } catch (IOException e) {
             Dialog.showError("", "", e.getMessage());
         }
@@ -69,7 +75,6 @@ public class LoginController {
 
     public void refreshComboBox() {
         cbrooms.setItems(FXCollections.observableList(Utils.SetToListR(roomList.getList())));
-        cbrooms.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -87,6 +92,7 @@ public class LoginController {
                     tfnickname.clear();
                 } catch (IOException e) {
                     Dialog.showError("Hubo un error", "Error al cargar la vista room", e.getMessage());
+                    e.printStackTrace();
                 }
             } else {
                 Dialog.showWarning("No pudiste entrar", "El usuario ya existe", "¡Hay un usuario online con el mismo nombre!\n Prueba otro nickname");
@@ -94,6 +100,10 @@ public class LoginController {
         } else {
             Dialog.showError("", "No pudiste entrar", "Tienes que rellenar al menos el campo del nickname");
         }
+    }
+
+    public static void changeAR(Room r){
+        selected = r;
     }
 
 

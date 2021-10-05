@@ -33,7 +33,7 @@
                      <GridPane.margin>
                         <Insets bottom="5.0" />
                      </GridPane.margin></Label>
-                  <ComboBox fx:id="cbrooms" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                  <ComboBox fx:id="cbrooms" maxWidth="1.7976931348623157E308" prefWidth="175.0" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                   <Button maxWidth="-Infinity" mnemonicParsing="false" onAction="#addRoom" text="+" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets left="25.0" right="25.0" />

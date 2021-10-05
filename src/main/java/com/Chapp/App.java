@@ -12,21 +12,19 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Objects;
+import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class App extends Application {
 
-    private static HashMap<String, Timer> timers;
     private static RoomList roomList;
-    private static Timer t;
+
 
     @Override
     public void start(Stage stage) throws IOException {
-        if (t == null)
-            t = new Timer();
-        RefreshDB();
-        addTimer(t, "DB");
-        loadScene(stage, "login", " Iniciar Sesión", false, false);
+        loadScene(stage, "common_window", " Seleccionar fichero", false, false);
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
@@ -38,9 +36,6 @@ public class App extends Application {
         stage.setScene(new Scene(loadFXML(fxml)));
         stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
         stage.setTitle(title);
-        stage.setOnCloseRequest(windowEvent -> cancelAndPurgeTimers(fxml));
-        //stage.setOnHiding(windowEvent -> cancelAndPurgeTimers(fxml));
-        //stage.setOnHidden(windowEvent -> cancelAndPurgeTimers(fxml));
         stage.setResizable(notResizable);
         if (SaW) stage.showAndWait();
         else stage.show();
@@ -50,28 +45,9 @@ public class App extends Application {
         stage.close();
     }
 
-    public static void addTimer(Timer t, String fxml) {
-        if (timers == null) timers = new HashMap<>();
-        timers.put(fxml, t);
-    }
-
-    public static void cancelAndPurgeTimers(String fxml) {
-        if (timers != null)
-            for (String s : timers.keySet()) {
-                if (fxml.equals(s)) {
-                    Timer t = timers.get(s);
-                    t.cancel();
-                    t.purge();
-                }
-            }
-        if (timers != null && fxml.equals("DB")) {
-            t.cancel();
-            t.purge();
-        }
-    }
-
     public static void RefreshDB() {
         roomList = RoomListDAO.load();
+        Timer t = new Timer();
         t.schedule(new TimerTask() {
             @Override
             public void run() {

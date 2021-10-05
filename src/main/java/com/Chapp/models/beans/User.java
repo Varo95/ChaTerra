@@ -17,7 +17,7 @@ public class User implements Serializable {
         isOnline = online;
     }
 
-    @XmlTransient
+    @XmlAttribute(name="isOnline")
     private boolean isOnline;
     private User(){}
 

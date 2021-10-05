@@ -5,7 +5,6 @@ import com.Chapp.models.beans.Message;
 import com.Chapp.models.beans.Room;
 import com.Chapp.models.beans.RoomList;
 import com.Chapp.models.beans.User;
-import com.Chapp.models.dao.RoomListDAO;
 import com.Chapp.utils.Dialog;
 import com.Chapp.utils.Utils;
 import javafx.application.Platform;
@@ -17,9 +16,19 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,6 +53,11 @@ public class RoomController {
     private static User user;
     private static RoomList roomList;
 
+    /*------Añadir sonido------------
+        Media sound = new Media(ssound);
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+     --------------------------------*/
     @FXML
     protected void initialize() {
         configureTables();
@@ -61,13 +75,13 @@ public class RoomController {
                 });
             }
         }, 0, 30000);
-        App.addTimer(t,"room");
         //----------------------------
         //Enter para enviar
         tamessage.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER)
                 onclickSend();
         });
+        Platform.runLater(() -> tamessage.requestFocus());
         //------------------
         darkmode.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             if (isSelected) {
@@ -76,6 +90,7 @@ public class RoomController {
                 tamessage.getScene().getStylesheets().remove(String.valueOf(App.class.getResource("dark.css")));
             }
         });
+
     }
 
     private void configureTables() {
@@ -101,12 +116,21 @@ public class RoomController {
             Message m = new Message(LocalDateTime.now(), user, tamessage.getText());
             room.addMessage(m);
             refreshMessages();
+            tvmessages.scrollTo(m);
             App.updateRoomList(roomList.getList());
             tamessage.clear();
         }
     }
 
     private void refreshMessages() {
+        for(Message m:room.getMessageList()){
+            if(!(m.getUser()==user)){
+                /*MediaPlayer mediaPlayer = null;
+                File f = new File(Objects.requireNonNull(App.class.getResource("newM.mp3")).toURI());
+                mediaPlayer = new MediaPlayer(new Media(Objects.requireNonNull(App.class.getResource("newM.mp3")).getFile()));
+                mediaPlayer.play();*/
+            }
+        }
         tvmessages.setItems(FXCollections.observableList(room.getMessageList()));
     }
 

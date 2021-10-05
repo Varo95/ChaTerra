@@ -11,12 +11,10 @@ import java.io.*;
 
 public class RoomListDAO {
 
-    public static void saveFile(RoomList rl) {
-        saveFile(rl, "Chaterra.xml");
-    }
+    private static String file;
 
-    public static void saveFile(RoomList rl, String f) {
-        saveFile(rl, new File(f));
+    public static void saveFile(RoomList rl) {
+        saveFile(rl, new File(file));
     }
 
     public static void saveFile(RoomList rl, File f) {
@@ -33,16 +31,20 @@ public class RoomListDAO {
     public static RoomList loadFile(File f) {
         RoomList result = null;
         try (BufferedReader r = new BufferedReader(new FileReader(f))) {
-            JAXBContext jaxbContext = JAXBContext.newInstance(RoomList.class);
-            Unmarshaller um = jaxbContext.createUnmarshaller();
+            JAXBContext jaxbC = JAXBContext.newInstance(RoomList.class);
+            Unmarshaller um = jaxbC.createUnmarshaller();
             result = (RoomList) um.unmarshal(r);
         } catch (IOException | JAXBException e) {
-            Dialog.showError("Error", "Hubo un error al cargar el XML", e.getMessage());
+            Dialog.showError("Error", "Hubo un error al cargar el XML", "Se intentará crear un nuevo fichero en esa ruta");
+            saveFile(new RoomList());
         }
         return result == null ? new RoomList() : result;
     }
 
+    public static void changeFile(String filepath){
+        file=filepath;
+    }
     public static RoomList load() {
-        return loadFile(new File("Chaterra.xml"));
+        return loadFile(new File(file));
     }
 }
