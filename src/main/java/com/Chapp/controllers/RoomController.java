@@ -3,8 +3,8 @@ package com.Chapp.controllers;
 import com.Chapp.App;
 import com.Chapp.models.beans.Message;
 import com.Chapp.models.beans.Room;
-import com.Chapp.models.beans.RoomList;
 import com.Chapp.models.beans.User;
+import com.Chapp.models.dao.RoomListDAO;
 import com.Chapp.utils.Dialog;
 import com.Chapp.utils.Utils;
 import javafx.application.Platform;
@@ -22,13 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,13 +45,7 @@ public class RoomController {
     private CheckMenuItem darkmode;
     private static Room room;
     private static User user;
-    private static RoomList roomList;
 
-    /*------Añadir sonido------------
-        Media sound = new Media(ssound);
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
-     --------------------------------*/
     @FXML
     protected void initialize() {
         configureTables();
@@ -69,12 +57,12 @@ public class RoomController {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    App.updateRoomList(roomList.getList());
+                    room = RoomListDAO.getRoom(room);
                     refreshMessages();
                     refreshOnlineUsers();
                 });
             }
-        }, 0, 30000);
+        }, 0, 20000);
         //----------------------------
         //Enter para enviar
         tamessage.setOnKeyPressed(event -> {
@@ -105,44 +93,42 @@ public class RoomController {
         user = u;
     }
 
-    public static void initRoomList(RoomList rl){
-        roomList = rl;
-    }
-
-
     @FXML
     private void onclickSend() {
+        if (!tamessage.isFocused())
+            tamessage.requestFocus();
         if (!tamessage.getText().equals("") && !tamessage.getText().isEmpty()) {
             Message m = new Message(LocalDateTime.now(), user, tamessage.getText());
             room.addMessage(m);
             refreshMessages();
             tvmessages.scrollTo(m);
-            App.updateRoomList(roomList.getList());
             tamessage.clear();
         }
     }
 
     private void refreshMessages() {
-        for(Message m:room.getMessageList()){
-            if(!(m.getUser()==user)){
-                /*MediaPlayer mediaPlayer = null;
-                File f = new File(Objects.requireNonNull(App.class.getResource("newM.mp3")).toURI());
-                mediaPlayer = new MediaPlayer(new Media(Objects.requireNonNull(App.class.getResource("newM.mp3")).getFile()));
-                mediaPlayer.play();*/
-            }
-        }
+        /* ¿Reproducir audio cada vez que veamos un nuevo mensaje?
+        MediaPlayer mediaPlayer = null;
+        File f = new File(Objects.requireNonNull(App.class.getResource("newM.mp3")).toURI());
+        mediaPlayer = new MediaPlayer(new Media(Objects.requireNonNull(App.class.getResource("newM.mp3")).getFile()));
+        mediaPlayer.play();
+        */
         tvmessages.setItems(FXCollections.observableList(room.getMessageList()));
+        //Se desplaza hasta el último mensaje
+        if (room.getMessageList().size() > 0)
+            tvmessages.scrollTo(room.getMessageList().get(room.getMessageList().size() - 1));
+        tvmessages.refresh();
     }
 
     private void refreshOnlineUsers() {
         tvonline.setItems(FXCollections.observableList(Utils.SetToListU(room.getUserList())));
+        tvonline.refresh();
     }
 
     @FXML
     private void exitRoom() {
         room.removeUserOnline(user);
         Dialog.showInformation("Desconexión", "Te desconectaste de la sala: " + room.getName(), "");
-        user.setOnline(false);
         App.closeScene((Stage) tamessage.getScene().getWindow());
     }
 

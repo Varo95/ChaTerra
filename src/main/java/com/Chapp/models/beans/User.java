@@ -3,23 +3,15 @@ package com.Chapp.models.beans;
 import jakarta.xml.bind.annotation.*;
 
 import java.io.Serializable;
+
 @XmlRootElement(name = "User")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User implements Serializable {
     @XmlValue
     private String name;
 
-    public boolean isOnline() {
-        return isOnline;
+    private User() {
     }
-
-    public void setOnline(boolean online) {
-        isOnline = online;
-    }
-
-    @XmlAttribute(name="isOnline")
-    private boolean isOnline;
-    private User(){}
 
     public User(String name) {
         this.name = name;
