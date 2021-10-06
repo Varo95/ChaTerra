@@ -108,6 +108,7 @@ public class Common_Window {
             User u = new User(textField.getText());
             if (users.add(u)) {
                 users.remove(old_nick);
+                RoomController.setUser(u);
                 Dialog.showInformation("", "Cambiado correctamente", "Ahora tu nickname es: " + textField.getText());
                 App.closeScene((Stage) textField.getScene().getWindow());
             } else {
@@ -145,7 +146,7 @@ public class Common_Window {
         actual_window = w;
     }
 
-    public static void verifyChangeNick(Set<User> u, User user) {
+    public static void setUserOnView(Set<User> u, User user) {
         users = u;
         old_nick = user;
     }

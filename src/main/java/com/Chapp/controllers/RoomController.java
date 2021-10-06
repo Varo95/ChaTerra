@@ -16,12 +16,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
-import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
-
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -93,6 +90,10 @@ public class RoomController {
         user = u;
     }
 
+    public static void setUser(User u) {
+        user = u;
+    }
+
     @FXML
     private void onclickSend() {
         if (!tamessage.isFocused())
@@ -130,6 +131,18 @@ public class RoomController {
         room.removeUserOnline(user);
         Dialog.showInformation("Desconexión", "Te desconectaste de la sala: " + room.getName(), "");
         App.closeScene((Stage) tamessage.getScene().getWindow());
+    }
+
+    @FXML
+    private void changeUserNick() {
+        Common_Window.setUserOnView(room.getUserList(), user);
+        Common_Window.changeWindow(Common_Window.window.CHANGE_NICK);
+        try {
+            App.loadScene(new Stage(), "common_window", "Creador de sala", true, false);
+            refreshOnlineUsers();
+        } catch (IOException e) {
+            Dialog.showError("Error", "Hubo un error en la vista", "Error en changeUserNick");
+        }
     }
 
 

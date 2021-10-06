@@ -64,7 +64,7 @@ public class RoomListDAO {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    RoomList temp = new RoomList(load().getList());
+                    RoomList temp = load();
                     if (temp.getList().size() > roomList.getList().size()) {
                         //Recorro las salas e intento añadirlas, si no son iguales no las cambiará
                         for (Room room_xml : temp.getList()) {
@@ -82,12 +82,9 @@ public class RoomListDAO {
                                     if (room_ram.getMessageList().size() < room_xml.getMessageList().size()) {
                                         room_ram.getMessageList().clear();
                                         room_ram.getMessageList().addAll(room_xml.getMessageList());
-                                        //Si el numero de Usuarios online del FICHERO es mayor que el actual de la RAM
                                     }
-                                    if (room_ram.getUserList().size() < room_xml.getUserList().size()) {
-                                        room_ram.getUserList().clear();
-                                        room_ram.getUserList().addAll(room_xml.getUserList());
-                                    }
+                                    room_ram.getUserList().clear();
+                                    room_ram.getUserList().addAll(room_xml.getUserList());
                                 }
                             }
                         }

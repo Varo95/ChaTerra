@@ -55,7 +55,7 @@
             <items>
                   <CheckMenuItem fx:id="darkmode" mnemonicParsing="false" text="Modo Oscuro" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-              <MenuItem mnemonicParsing="false" text="Cambiar nickname" />
+              <MenuItem mnemonicParsing="false" onAction="#changeUserNick" text="Cambiar nickname" />
               <MenuItem mnemonicParsing="false" onAction="#exitRoom" text="Salir de la sala" />
             </items>
           </Menu>
