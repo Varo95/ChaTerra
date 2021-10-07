@@ -2,6 +2,7 @@ package com.Chapp.models.dao;
 
 import com.Chapp.models.beans.Room;
 import com.Chapp.models.beans.RoomList;
+import com.Chapp.models.beans.User;
 import com.Chapp.utils.Dialog;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -10,6 +11,8 @@ import jakarta.xml.bind.Unmarshaller;
 import javafx.application.Platform;
 
 import java.io.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +21,8 @@ public class RoomListDAO {
     private static String file;
 
     private static RoomList roomList;
+
+    private static User actual_user;
 
     public static void changeFile(String filepath) {
         file = filepath;
@@ -86,6 +91,7 @@ public class RoomListDAO {
                                     room_ram.getUserList().clear();
                                     room_ram.getUserList().addAll(room_xml.getUserList());
                                 }
+                                break;
                             }
                         }
                     }
@@ -98,6 +104,10 @@ public class RoomListDAO {
 
     public static RoomList getRoomList() {
         return roomList;
+    }
+
+    public static void setActual_user(User u) {
+        actual_user = u;
     }
 
     public static Room getRoom(Room r) {

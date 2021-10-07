@@ -109,6 +109,7 @@ public class Common_Window {
             if (users.add(u)) {
                 users.remove(old_nick);
                 RoomController.setUser(u);
+                RoomListDAO.setActual_user(u);
                 Dialog.showInformation("", "Cambiado correctamente", "Ahora tu nickname es: " + textField.getText());
                 App.closeScene((Stage) textField.getScene().getWindow());
             } else {

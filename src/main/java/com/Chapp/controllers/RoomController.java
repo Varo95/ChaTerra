@@ -88,6 +88,7 @@ public class RoomController {
     public static void setRoom(Room r, User u) {
         room = r;
         user = u;
+        RoomListDAO.setActual_user(u);
     }
 
     public static void setUser(User u) {
@@ -129,6 +130,7 @@ public class RoomController {
     @FXML
     private void exitRoom() {
         room.removeUserOnline(user);
+        RoomListDAO.saveFile(RoomListDAO.getRoomList());
         Dialog.showInformation("Desconexión", "Te desconectaste de la sala: " + room.getName(), "");
         App.closeScene((Stage) tamessage.getScene().getWindow());
     }

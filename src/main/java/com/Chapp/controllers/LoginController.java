@@ -79,6 +79,7 @@ public class LoginController {
                 cbrooms.getSelectionModel().getSelectedItem().isTemporal(false);
                 Dialog.showInformation("", "", "Pulsa aceptar para unirte a la sala");
                 RoomController.setRoom(cbrooms.getSelectionModel().getSelectedItem(), c);
+                RoomListDAO.saveFile(roomList);
                 try {
                     App.loadScene(new Stage(), "room", "Sala: " + cbrooms.getSelectionModel().getSelectedItem().getName(), true, true);
                     tfnickname.clear();
