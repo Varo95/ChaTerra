@@ -57,6 +57,11 @@ public class RoomController {
                     room = RoomListDAO.getRoom(room);
                     refreshMessages();
                     refreshOnlineUsers();
+                    for(User u: room.getUserList()){
+                        if(!u.isOnline()){
+                            room.removeUserOnline(u);
+                        }
+                    }
                 });
             }
         }, 0, 20000);
@@ -88,7 +93,8 @@ public class RoomController {
     public static void setRoom(Room r, User u) {
         room = r;
         user = u;
-        RoomListDAO.setActual_user(u);
+        room.addUserOnline(user);
+        RoomListDAO.setActual_user(user);
     }
 
     public static void setUser(User u) {
@@ -129,7 +135,12 @@ public class RoomController {
 
     @FXML
     private void exitRoom() {
-        room.removeUserOnline(user);
+        user.setOnline(false);
+        for(User u: room.getUserList()){
+            if(u.equals(user)){
+                u.setOnline(false);
+            }
+        }
         RoomListDAO.saveFile(RoomListDAO.getRoomList());
         Dialog.showInformation("Desconexión", "Te desconectaste de la sala: " + room.getName(), "");
         App.closeScene((Stage) tamessage.getScene().getWindow());

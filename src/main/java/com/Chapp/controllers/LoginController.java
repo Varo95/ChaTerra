@@ -76,6 +76,7 @@ public class LoginController {
         if (!tfnickname.getText().equals("") && !tfnickname.getText().isEmpty()) {
             User c = new User(tfnickname.getText());
             if (cbrooms.getSelectionModel().getSelectedItem().addUserOnline(c)) {
+                c.setOnline(true);
                 cbrooms.getSelectionModel().getSelectedItem().isTemporal(false);
                 Dialog.showInformation("", "", "Pulsa aceptar para unirte a la sala");
                 RoomController.setRoom(cbrooms.getSelectionModel().getSelectedItem(), c);

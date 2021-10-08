@@ -10,6 +10,8 @@ import java.util.Objects;
 public class User implements Serializable {
     @XmlValue
     private String name;
+    @XmlAttribute(name="isOnline")
+    private boolean isOnline;
 
     private User() {
     }
@@ -24,6 +26,14 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isOnline(){
+        return this.isOnline;
+    }
+
+    public void setOnline(boolean isOnline){
+        this.isOnline=isOnline;
     }
 
 
