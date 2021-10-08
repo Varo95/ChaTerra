@@ -57,11 +57,6 @@ public class RoomController {
                     room = RoomListDAO.getRoom(room);
                     refreshMessages();
                     refreshOnlineUsers();
-                    for(User u: room.getUserList()){
-                        if(!u.isOnline()){
-                            room.removeUserOnline(u);
-                        }
-                    }
                 });
             }
         }, 0, 20000);

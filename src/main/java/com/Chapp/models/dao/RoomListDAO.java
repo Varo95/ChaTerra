@@ -89,11 +89,7 @@ public class RoomListDAO {
                                         room_ram.getMessageList().addAll(room_xml.getMessageList());
                                     }
                                     room_ram.getUserList().clear();
-                                    for(User u_online:room_xml.getUserList()){
-                                        if(!u_online.isOnline()){
-                                            room_ram.getUserList().remove(u_online);
-                                        }
-                                    }
+                                    room_xml.getUserList().removeIf(u_online -> !u_online.isOnline());
                                     room_ram.getUserList().addAll(room_xml.getUserList());
                                 }
                                 break;
