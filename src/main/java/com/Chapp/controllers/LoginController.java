@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -79,6 +80,8 @@ public class LoginController {
                 c.setOnline(true);
                 cbrooms.getSelectionModel().getSelectedItem().isTemporal(false);
                 Dialog.showInformation("", "", "Pulsa aceptar para unirte a la sala");
+                MediaPlayer mp = Utils.onJoinRoom();
+                mp.play();
                 RoomController.setRoom(cbrooms.getSelectionModel().getSelectedItem(), c);
                 RoomListDAO.saveFile(roomList);
                 try {
@@ -95,7 +98,7 @@ public class LoginController {
         }
     }
 
-    public static void changeAR(Room r){
+    public static void changeAR(Room r) {
         selected = r;
     }
 

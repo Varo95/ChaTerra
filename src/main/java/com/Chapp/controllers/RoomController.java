@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -66,7 +67,11 @@ public class RoomController {
             if (event.getCode() == KeyCode.ENTER)
                 onclickSend();
         });
-        Platform.runLater(() -> tamessage.requestFocus());
+        Platform.runLater(() -> {
+            tamessage.requestFocus();
+            Stage a = (Stage) tamessage.getScene().getWindow();
+            a.setOnCloseRequest(windowEvent -> exitRoom());
+        });
         //------------------
         darkmode.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             if (isSelected) {
@@ -101,6 +106,8 @@ public class RoomController {
         if (!tamessage.isFocused())
             tamessage.requestFocus();
         if (!tamessage.getText().equals("") && !tamessage.getText().isEmpty()) {
+            MediaPlayer md = Utils.onSend();
+            md.play();
             Message m = new Message(LocalDateTime.now(), user, tamessage.getText());
             room.addMessage(m);
             refreshMessages();
@@ -110,12 +117,6 @@ public class RoomController {
     }
 
     private void refreshMessages() {
-        /* ¿Reproducir audio cada vez que veamos un nuevo mensaje?
-        MediaPlayer mediaPlayer = null;
-        File f = new File(Objects.requireNonNull(App.class.getResource("newM.mp3")).toURI());
-        mediaPlayer = new MediaPlayer(new Media(Objects.requireNonNull(App.class.getResource("newM.mp3")).getFile()));
-        mediaPlayer.play();
-        */
         tvmessages.setItems(FXCollections.observableList(room.getMessageList()));
         //Se desplaza hasta el último mensaje
         if (room.getMessageList().size() > 0)
@@ -131,13 +132,15 @@ public class RoomController {
     @FXML
     private void exitRoom() {
         user.setOnline(false);
-        for(User u: room.getUserList()){
-            if(u.equals(user)){
+        for (User u : room.getUserList()) {
+            if (u.equals(user)) {
                 u.setOnline(false);
             }
         }
         RoomListDAO.saveFile(RoomListDAO.getRoomList());
         Dialog.showInformation("Desconexión", "Te desconectaste de la sala: " + room.getName(), "");
+        MediaPlayer mp = Utils.onExitRoom();
+        mp.play();
         App.closeScene((Stage) tamessage.getScene().getWindow());
     }
 
