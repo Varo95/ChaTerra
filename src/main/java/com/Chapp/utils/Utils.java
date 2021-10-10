@@ -9,8 +9,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.StringConverter;
 import javafx.util.converter.LocalDateTimeStringConverter;
 
-import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -65,7 +63,7 @@ public class Utils {
     }
 
     /**
-     * Este método sirve para formatear correctamente la fecha en la vista de la sala con
+     * Este método sirve para formatear correctamente la fecha en la vista de la sala
      *
      * @param localDateTime la fecha a formatear
      * @return el string de la cadena formateada
@@ -86,8 +84,14 @@ public class Utils {
         return new MediaPlayer(sound);
     }
 
-    public static MediaPlayer onExitRoom(){
+    public static MediaPlayer onExitRoom() {
         String s = "file://" + Objects.requireNonNull(App.class.getResource("exit.mp3")).getFile();
+        Media sound = new Media(s);
+        return new MediaPlayer(sound);
+    }
+
+    public static MediaPlayer onSelectDB() {
+        String s = "file://" + Objects.requireNonNull(App.class.getResource("db.mp3")).getFile();
         Media sound = new Media(s);
         return new MediaPlayer(sound);
     }

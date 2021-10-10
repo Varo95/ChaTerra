@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="460.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.Chapp.controllers.EmojiSearchController">
+   <center>
+        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+            <children>
+                <TabPane fx:id="tabPane" prefHeight="200.0" prefWidth="200.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
+                        <Tab text="Frequently Used">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="People">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Nature">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Food">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Activity">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Travel">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Objects">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Symbols">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Flags">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Regional">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Extras">
+                            <content>
+                                <ScrollPane>
+                                    <content>
+                                        <FlowPane />
+                                    </content>
+                                </ScrollPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+                <ScrollPane fx:id="searchScrollPane" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <content>
+                        <FlowPane fx:id="searchFlowPane" />
+                    </content>
+                </ScrollPane>
+            </children>
+        </AnchorPane>
+   </center>
+   <top>
+        <HBox maxWidth="1.7976931348623157E308" spacing="5.0" BorderPane.alignment="CENTER">
+            <children>
+                <TextField fx:id="txtSearch" focusTraversable="false" promptText="Buscar emoji" HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="boxTone" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="51.0" />
+            </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+        </HBox>
+   </top>
+</BorderPane>

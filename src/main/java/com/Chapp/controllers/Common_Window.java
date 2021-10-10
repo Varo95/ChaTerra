@@ -6,17 +6,18 @@ import com.Chapp.models.beans.RoomList;
 import com.Chapp.models.beans.User;
 import com.Chapp.models.dao.RoomListDAO;
 import com.Chapp.utils.Dialog;
+import com.Chapp.utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
 
 public class Common_Window {
     @FXML
@@ -28,8 +29,8 @@ public class Common_Window {
     @FXML
     private Label label;
     private static User old_nick;
-    private static Set<User> users;
     private static RoomList rooms;
+    private static Room room;
     private static window actual_window = window.SELECT_FILE;
 
     public enum window {
@@ -82,7 +83,6 @@ public class Common_Window {
         }
     }
 
-
     public static void existing_Rooms(RoomList rl) {
         rooms = rl;
     }
@@ -106,8 +106,15 @@ public class Common_Window {
     private void onClickChangeNick() {
         if (!textField.getText().equals("")) {
             User u = new User(textField.getText());
-            if (users.add(u)) {
-                users.remove(old_nick);
+            if (RoomListDAO.getRoom(room).addUserOnline(u)) {
+                u.setOnline(true);
+                for (User c : room.getUserList()) {
+                    if (c.equals(old_nick)) {
+                        c.setOnline(false);
+                        RoomListDAO.getRoom(room).removeUserOnline(c);
+                        break;
+                    }
+                }
                 RoomController.setUser(u);
                 RoomListDAO.setActual_user(u);
                 Dialog.showInformation("", "Cambiado correctamente", "Ahora tu nickname es: " + textField.getText());
@@ -123,6 +130,8 @@ public class Common_Window {
     private void onClickContinue() {
         RoomListDAO.changeFile(textField.getText());
         Dialog.showInformation("", "", "Se ha conectado correctamente a la base de datos");
+        MediaPlayer mp = Utils.onSelectDB();
+        mp.play();
         try {
             actual_window = window.CREATE_ROOM;
             App.closeScene((Stage) textField.getScene().getWindow());
@@ -147,8 +156,8 @@ public class Common_Window {
         actual_window = w;
     }
 
-    public static void setUserOnView(Set<User> u, User user) {
-        users = u;
+    public static void setUserOnView(Room r, User user) {
+        room = r;
         old_nick = user;
     }
 }

@@ -23,11 +23,11 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void loadScene(Stage stage, String fxml, String title, boolean SaW, boolean notResizable) throws IOException {
+    public static void loadScene(Stage stage, String fxml, String title, boolean SaW, boolean isResizable) throws IOException {
         stage.setScene(new Scene(loadFXML(fxml)));
         stage.getIcons().add(new Image(Objects.requireNonNull(App.class.getResourceAsStream("chaterra.png"))));
         stage.setTitle(title);
-        stage.setResizable(notResizable);
+        stage.setResizable(isResizable);
         if (SaW) stage.showAndWait();
         else stage.show();
     }

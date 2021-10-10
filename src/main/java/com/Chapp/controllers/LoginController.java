@@ -98,6 +98,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * Este método sirve para seleccionar la sala cuando se crea desde la vista de crear sala
+     *
+     * @param r Sala actual de la vista
+     */
     public static void changeAR(Room r) {
         selected = r;
     }
