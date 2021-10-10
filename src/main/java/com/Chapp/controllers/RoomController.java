@@ -12,15 +12,18 @@ import com.Chapp.utils.emoji.EmojiParser;
 import com.Chapp.utils.emoji.EmojiTextFlow;
 import com.Chapp.utils.emoji.EmojiTextFlowParameters;
 import com.Chapp.view.TableRowMessage;
+import javafx.animation.ScaleTransition;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -48,6 +51,8 @@ public class RoomController {
     private Button emojibutton;
     private static Room room;
     private static User user;
+
+    private static Stage emojiStage;
 
 
     @FXML
@@ -82,11 +87,30 @@ public class RoomController {
         });
         //-------------------
         ImageView emoji = new ImageView();
+        ImageView emoji1 = new ImageView();
         emoji.setImage(EmojiImageCache.getInstance().getImage(EmojiSearchController.getEmojiImagePath(EmojiParser.getInstance().getEmoji(":slight_smile:").getHex())));
+        emoji1.setImage(EmojiImageCache.getInstance().getImage(EmojiSearchController.getEmojiImagePath(EmojiParser.getInstance().getEmoji(":wink:").getHex())));
         emoji.setFitHeight(25.6);
         emoji.setFitWidth(28);
+        emoji1.setFitHeight(25.6);
+        emoji1.setFitWidth(28);
         emojibutton.setGraphic(emoji);
         emojibutton.setStyle("-fx-border-color: transparent;-fx-border-width: 0;-fx-background-radius: 0;-fx-background-color: transparent;-fx-font-family:\"Segoe UI\", Helvetica, Arial, sans-serif;-fx-font-size: 1em;-fx-text-fill: #828282;");
+        ScaleTransition st = new ScaleTransition(Duration.millis(90), emojibutton);
+        emojibutton.setOnMouseEntered(mouseEvent -> {
+            emojibutton.setEffect(new DropShadow());
+            st.setToX(1.2);
+            st.setToY(1.2);
+            st.playFromStart();
+            emojibutton.setGraphic(emoji1);
+        });
+        emojibutton.setOnMouseExited(mouseEvent -> {
+            emojibutton.setEffect(null);
+            st.setToX(1.);
+            st.setToY(1.);
+            st.playFromStart();
+            emojibutton.setGraphic(emoji);
+        });
         darkmode.selectedProperty().addListener((obs, wasSelected, isSelected) -> {
             if (isSelected) {
                 tamessage.getScene().getStylesheets().add(String.valueOf(App.class.getResource("dark.css")));
@@ -100,7 +124,7 @@ public class RoomController {
     private void configureTables() {
         tcdates.setCellValueFactory(eachMessage -> new SimpleStringProperty(Utils.LocalDateToString(eachMessage.getValue().getTimestamp())));
         tcusers.setCellValueFactory(eachMessage -> new SimpleStringProperty(eachMessage.getValue().getUser().getName()));
-        tcmessages.setCellValueFactory(eachMessage -> new TableRowMessage(new EmojiTextFlowParameters(), eachMessage.getValue().getMessage(),tcmessages));
+        tcmessages.setCellValueFactory(eachMessage -> new TableRowMessage(new EmojiTextFlowParameters(), eachMessage.getValue().getMessage(), tcmessages));
         tconline.setCellValueFactory(eachUser -> new SimpleStringProperty(eachUser.getValue().getName()));
     }
 
@@ -155,6 +179,8 @@ public class RoomController {
         Dialog.showInformation("Desconexión", "Te desconectaste de la sala: " + room.getName(), "");
         MediaPlayer mp = Utils.onExitRoom();
         mp.play();
+        if (emojiStage != null)
+            App.closeScene(emojiStage);
         App.closeScene((Stage) tamessage.getScene().getWindow());
     }
 
@@ -178,6 +204,10 @@ public class RoomController {
         } catch (IOException e) {
             Dialog.showError("Error", "Hubo un error en la vista", "Error en onclickEmoji");
         }
+    }
+
+    public static void setEmojiStage(Stage s){
+        emojiStage = s;
     }
 
 }

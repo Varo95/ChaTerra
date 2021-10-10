@@ -5,6 +5,7 @@ import com.Chapp.utils.emoji.Emoji;
 import com.Chapp.utils.emoji.EmojiImageCache;
 import com.Chapp.utils.emoji.EmojiParser;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.List;
@@ -58,8 +60,7 @@ public class EmojiSearchController {
         boxTone.setCellFactory(e -> new ToneCell());
         boxTone.setButtonCell(new ToneCell());
         boxTone.getSelectionModel().selectedItemProperty().addListener(e -> refreshTabs());
-
-
+        Platform.runLater(()->RoomController.setEmojiStage((Stage) boxTone.getScene().getWindow()));
         searchScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         searchFlowPane.prefWidthProperty().bind(searchScrollPane.widthProperty().subtract(5));
         searchFlowPane.setHgap(5);

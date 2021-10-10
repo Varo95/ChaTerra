@@ -82,7 +82,6 @@ public class EmojiParser {
                 unicodeToShortname.put(convert(unicode), shortname);
             });
             entry.getAliasesAscii().forEach(ascii -> asciiToShortname.put(ascii, shortname));
-
         });
 
         ASCII_PATTERN = Pattern.compile(asciiToShortname.keySet().stream().map(Pattern::quote).collect(Collectors.joining("|")));
@@ -134,7 +133,6 @@ public class EmojiParser {
                 return convert(unicode);
             });
         }
-
         return output;
     }
 
