@@ -10,6 +10,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+/**
+ * Esta clase ha sido Joseada y modificada de https://github.com/pavlobu/emoji-text-flow-javafx
+ */
 public class EmojiParser {
     private static final boolean USE_ASCII = true;
     private static final HashMap<String, EmojiEntry> emojiList = new HashMap<>();
@@ -31,7 +34,7 @@ public class EmojiParser {
         return INSTANCE;
     }
 
-    private static final String EMOJIONE_JSON_FILE = "emoji.json";
+    private static final String EMOJIONE_JSON_FILE = "emotes/emoji.json";
     private static final String EMOJIONE_KEY_NAME = "name";
     private static final String EMOJIONE_KEY_SHORTNAME = "shortname";
     private static final String EMOJIONE_KEY_UNICODE_ALT = "unicode_alt";

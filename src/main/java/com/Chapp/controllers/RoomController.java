@@ -131,7 +131,6 @@ public class RoomController {
     public static void setRoom(Room r, User u) {
         room = r;
         user = u;
-        RoomListDAO.setActual_user(user);
     }
 
     public static void setUser(User u) {
@@ -199,13 +198,19 @@ public class RoomController {
     @FXML
     public void onclickEmoji() {
         try {
+            //Le pasamos el textarea para que luego pueda escribir en ella a través del otro controlador
             EmojiSearchController.setTextArea(tamessage);
-            App.loadScene(new Stage(), "emojiList", "Lista emojis", false, true);
+            if(!EmojiSearchController.isOpened)
+                App.loadScene(new Stage(), "emojiList", "Lista emojis", false, true);
         } catch (IOException e) {
             Dialog.showError("Error", "Hubo un error en la vista", "Error en onclickEmoji");
         }
     }
 
+    /**
+     * Con esto pasamos el Stage de la ventana de emojis para que se cierre también cuando se cierra la ventana de la Sala
+     * @param s Stage de la ventana de emoticonos
+     */
     public static void setEmojiStage(Stage s){
         emojiStage = s;
     }

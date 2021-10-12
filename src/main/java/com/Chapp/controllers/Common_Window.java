@@ -19,6 +19,12 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Esta controlador maneja una sola vista que es usada para 3 cosas:
+ * -Seleccionar fichero
+ * -Crear sala
+ * -Cambiar nickname
+ */
 public class Common_Window {
     @FXML
     private TextField textField;
@@ -33,11 +39,14 @@ public class Common_Window {
     private static Room room;
     private static window actual_window = window.SELECT_FILE;
 
+    /**
+     * Enums para poder hacer referencia desde otros controladores y llamar a la ventana correcta desde otras ventanas
+     */
     public enum window {
         SELECT_FILE("FILE"),
         CHANGE_NICK("NICK"),
         CREATE_ROOM("ROOM");
-        private String w;
+        private final String w;
 
         window(String w) {
             this.w = w;
@@ -116,7 +125,6 @@ public class Common_Window {
                     }
                 }
                 RoomController.setUser(u);
-                RoomListDAO.setActual_user(u);
                 Dialog.showInformation("", "Cambiado correctamente", "Ahora tu nickname es: " + textField.getText());
                 App.closeScene((Stage) textField.getScene().getWindow());
             } else {
@@ -137,7 +145,7 @@ public class Common_Window {
             App.closeScene((Stage) textField.getScene().getWindow());
             App.loadScene(new Stage(), "login", " Login", true, true);
         } catch (IOException e) {
-            Dialog.showError("", "", "");
+            Dialog.showError("Error", "", "Error al cargar la vista de login");
         }
     }
 
@@ -148,7 +156,7 @@ public class Common_Window {
         if (selectedFile != null) {
             textField.setText(selectedFile.getAbsolutePath());
         } else {
-            Dialog.showError("Error", "", "Fichero no seleccionado");
+            Dialog.showWarning("Advertencia", "", "Fichero no seleccionado!");
         }
     }
 

@@ -4,6 +4,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * Esta clase ha sido Joseada y modificada de https://github.com/pavlobu/emoji-text-flow-javafx
+ */
 public class EmojiTextFlowParameters {
 
     private TextAlignment textAlignment;

@@ -2,7 +2,6 @@ package com.Chapp.utils.emoji;
 
 import com.Chapp.App;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,22 +9,13 @@ import org.slf4j.LoggerFactory;
 import java.util.Objects;
 import java.util.Queue;
 
+/**
+ * Esta clase ha sido Joseada y modificada de https://github.com/pavlobu/emoji-text-flow-javafx
+ */
 public class EmojiTextFlow extends TextFlow {
     private static final Logger logger = LoggerFactory.getLogger(EmojiTextFlow.class);
 
-    private EmojiTextFlowParameters parameters;
-
-    public EmojiTextFlow() {
-        initializeDefaultParametersObject();
-    }
-
-    private void initializeDefaultParametersObject() {
-        parameters = new EmojiTextFlowParameters();
-        parameters.setEmojiScaleFactor(1D);
-        parameters.setTextAlignment(TextAlignment.CENTER);
-        parameters.setFont(Font.font("System", FontWeight.NORMAL, 35));
-        parameters.setTextColor(Color.BLACK);
-    }
+    private final EmojiTextFlowParameters parameters;
 
     public EmojiTextFlow(EmojiTextFlowParameters parameters) {
         this.parameters = parameters;

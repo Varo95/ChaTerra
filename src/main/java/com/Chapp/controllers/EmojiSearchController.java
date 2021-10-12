@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Esta clase ha sido Joseada y modificada de https://github.com/pavlobu/emoji-text-flow-javafx
+ */
 public class EmojiSearchController {
 
     private static final boolean SHOW_MISC = false;
@@ -38,11 +41,14 @@ public class EmojiSearchController {
     private TextField txtSearch;
     @FXML
     private ComboBox<Image> boxTone;
-    //Este text Area hace referencia al textArea de la sala
+    //Este text Area hace referencia al textArea de la vista Room (RoomController)
     private static TextArea textArea;
+
+    public static boolean isOpened;
 
     @FXML
     void initialize() {
+        isOpened = true;
         if (!SHOW_MISC) {
             tabPane.getTabs().remove(tabPane.getTabs().size() - 2, tabPane.getTabs().size());
         }
@@ -60,7 +66,11 @@ public class EmojiSearchController {
         boxTone.setCellFactory(e -> new ToneCell());
         boxTone.setButtonCell(new ToneCell());
         boxTone.getSelectionModel().selectedItemProperty().addListener(e -> refreshTabs());
-        Platform.runLater(()->RoomController.setEmojiStage((Stage) boxTone.getScene().getWindow()));
+        Platform.runLater(() -> {
+            Stage a = (Stage) boxTone.getScene().getWindow();
+            RoomController.setEmojiStage(a);
+            a.setOnCloseRequest(event -> isOpened = false);
+        });
         searchScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         searchFlowPane.prefWidthProperty().bind(searchScrollPane.widthProperty().subtract(5));
         searchFlowPane.setHgap(5);

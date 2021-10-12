@@ -2,7 +2,6 @@ package com.Chapp.models.dao;
 
 import com.Chapp.models.beans.Room;
 import com.Chapp.models.beans.RoomList;
-import com.Chapp.models.beans.User;
 import com.Chapp.utils.Dialog;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
@@ -19,8 +18,6 @@ public class RoomListDAO {
     private static String file;
 
     private static RoomList roomList;
-
-    private static User actual_user;
 
     public static void changeFile(String filepath) {
         file = filepath;
@@ -87,6 +84,8 @@ public class RoomListDAO {
                                         room_ram.getMessageList().addAll(room_xml.getMessageList());
                                     }
                                     room_ram.getUserList().clear();
+                                    //Eliminamos de las salas del xml(cargadas en ram tambien) los Usuarios offline
+                                    // para NO añadirlos posteriormente a la RAM
                                     room_xml.getUserList().removeIf(u_online -> !u_online.isOnline());
                                     room_ram.getUserList().addAll(room_xml.getUserList());
                                 }
@@ -94,7 +93,7 @@ public class RoomListDAO {
                             }
                         }
                     }
-                    //En cualquier caso vuelve a escribir el fichero
+                    //En cualquier caso vuelve a escribir el fichero con los datos de la RAM, ahora actualizados
                     saveFile(roomList);
                 });
             }
@@ -105,9 +104,6 @@ public class RoomListDAO {
         return roomList;
     }
 
-    public static void setActual_user(User u) {
-        actual_user = u;
-    }
 
     public static Room getRoom(Room r) {
         Room result = null;

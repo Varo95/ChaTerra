@@ -19,7 +19,7 @@ import java.util.Set;
 public class Utils {
 
     /**
-     * Estos métodos son para formatear el texto de la fecha, estamparlo en el XML y recuperarlo bien
+     * Este método es para formatear el texto de la fecha, estamparlo en el XML y recuperarlo bien
      */
     public static LocalDateTimeStringConverter ldtsc(DateTimeFormatter dts) {
         return new LocalDateTimeStringConverter(dts, dts);
@@ -71,27 +71,27 @@ public class Utils {
     public static String LocalDateToString(LocalDateTime localDateTime) {
         return ldtsc(DateTimeFormatter.ofPattern("HH:mm:ss")).toString(localDateTime);
     }
-
+    //La jodida ruta no paraba de dar problemas! FINALMENTE SOLUCIONADO, CARAJO
     public static MediaPlayer onSend() {
-        String s = "file://" + Objects.requireNonNull(App.class.getResource("sendM.mp3")).getFile();
+        String s = Objects.requireNonNull(App.class.getResource("sounds/sendM.mp3")).toExternalForm();
         Media sound = new Media(s);
         return new MediaPlayer(sound);
     }
 
     public static MediaPlayer onJoinRoom() {
-        String s = "file://" + Objects.requireNonNull(App.class.getResource("login.mp3")).getFile();
+        String s = Objects.requireNonNull(App.class.getResource("sounds/login.mp3")).toExternalForm();
         Media sound = new Media(s);
         return new MediaPlayer(sound);
     }
 
     public static MediaPlayer onExitRoom() {
-        String s = "file://" + Objects.requireNonNull(App.class.getResource("exit.mp3")).getFile();
+        String s = Objects.requireNonNull(App.class.getResource("sounds/exit.mp3")).toExternalForm();
         Media sound = new Media(s);
         return new MediaPlayer(sound);
     }
 
     public static MediaPlayer onSelectDB() {
-        String s = "file://" + Objects.requireNonNull(App.class.getResource("db.mp3")).getFile();
+        String s = Objects.requireNonNull(App.class.getResource("sounds/db.mp3")).toExternalForm();
         Media sound = new Media(s);
         return new MediaPlayer(sound);
     }

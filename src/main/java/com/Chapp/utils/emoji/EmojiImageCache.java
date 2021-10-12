@@ -5,8 +5,12 @@ import javafx.scene.image.Image;
 import java.lang.ref.WeakReference;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Esta clase ha sido Joseada y modificada de https://github.com/pavlobu/emoji-text-flow-javafx
+ */
 public class EmojiImageCache {
-    private ConcurrentHashMap<String, WeakReference<Image>> map;
+
+    private final ConcurrentHashMap<String, WeakReference<Image>> map;
     private static EmojiImageCache INSTANCE;
 
     private EmojiImageCache() {

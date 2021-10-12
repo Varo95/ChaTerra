@@ -1,5 +1,8 @@
 package com.Chapp.utils.emoji;
 
+/**
+ * Esta clase ha sido Joseada de https://github.com/pavlobu/emoji-text-flow-javafx
+ */
 public class Emoji {
     private String shortname;
     private String unicode;

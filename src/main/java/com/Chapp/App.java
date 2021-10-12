@@ -12,7 +12,6 @@ import java.util.Objects;
 
 public class App extends Application {
 
-
     @Override
     public void start(Stage stage) throws IOException {
         loadScene(stage, "common_window", " Seleccionar fichero", false, false);
@@ -38,6 +37,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
+        //Cierra todos los timers, llámame mal programador :(
         System.exit(0);
     }
 

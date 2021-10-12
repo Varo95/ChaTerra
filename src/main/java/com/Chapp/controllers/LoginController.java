@@ -32,6 +32,7 @@ public class LoginController {
 
     @FXML
     protected void initialize() {
+        //¡SOLO LO HACEMOS UNA VEZ!. No se puede volver a llamar a este método más en ninguna otra clase
         RoomListDAO.RefreshDB();
         roomList = RoomListDAO.getRoomList();
         cbrooms.setConverter(Utils.RoomConverter());
